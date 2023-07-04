@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="" style="width: 100%; margin-top: 10px">
+    <div class="card">
+      <div class="card-header">Add a New Device</div>
+      <div class="card-body adddev">
+        <p>To add a new Device click Add Device Button</p>
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapsed"
+          data-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          (click)="toogle_collapsed()"
+        >
+          Add Device
+        </button>
+      </div>
+
+      <div
+        class="collapse"
+        style="padding: 10px"
+        id="collapseExample"
+        [ngbCollapse]="collapsed"
+      >
+        <div class="card card-body mt-2">
+          <form>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Select Device Type</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option *ngFor="let devtype of deviceTypes">
+                  {{ devtype }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="devicename">Device Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="devicename"
+                placeholder="Enter the Device Name"
+              />
+            </div>
+            <div class="adddevbut">
+              <button type="button" class="btn btn-success">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>hello</div>

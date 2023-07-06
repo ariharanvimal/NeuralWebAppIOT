@@ -24,14 +24,41 @@
         [ngbCollapse]="collapsed"
       >
         <div class="card card-body mt-2">
-          <form>
+          <div class="alert alert-danger" role="alert" *ngIf="emptyForm">
+            Please fill all the detials in the form
+          </div>
+          <form class="needs-validation" [formGroup]="addDeviceForm" novalidate>
             <div class="form-group">
               <label for="exampleFormControlSelect1">Select Device Type</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option *ngFor="let devtype of deviceTypes">
+              <select
+                class="form-control"
+                id="exampleFormControlSelect1"
+                formControlName="devtype"
+                required
+                [ngClass]="
+                  (addDeviceForm.controls['devtype'].touched ||
+                    addDeviceForm.controls['devtype'].dirty) &&
+                  addDeviceForm.controls['devtype'].invalid
+                    ? 'is-invalid'
+                    : '' ||
+                      ((addDeviceForm.controls['devtype'].touched ||
+                        addDeviceForm.controls['devtype'].dirty) &&
+                        !addDeviceForm.controls['devtype'].invalid)
+                    ? 'is-valid'
+                    : ''
+                "
+              >
+                <option *ngFor="let devtype of deviceTypes.types">
                   {{ devtype }}
                 </option>
               </select>
+              <div class="invalid-feedback">
+                {{
+                  addDeviceForm.controls["devtype"].hasError("required")
+                    ? "Please Select the Device Type from the List"
+                    : ""
+                }}
+              </div>
             </div>
             <div class="form-group">
               <label for="devicename">Device Name</label>
@@ -40,15 +67,78 @@
                 class="form-control"
                 id="devicename"
                 placeholder="Enter the Device Name"
+                formControlName="devname"
+                autocomplete="off"
+                required
+                [ngClass]="
+                  (addDeviceForm.controls['devname'].touched ||
+                    addDeviceForm.controls['devname'].dirty) &&
+                  addDeviceForm.controls['devname'].invalid
+                    ? 'is-invalid'
+                    : '' ||
+                      ((addDeviceForm.controls['devname'].touched ||
+                        addDeviceForm.controls['devname'].dirty) &&
+                        !addDeviceForm.controls['devname'].invalid)
+                    ? 'is-valid'
+                    : ''
+                "
               />
+              <div class="invalid-feedback">
+                {{
+                  addDeviceForm.controls["devname"].hasError("required")
+                    ? "Email ID is Required"
+                    : ""
+                }}
+              </div>
             </div>
             <div class="adddevbut">
-              <button type="button" class="btn btn-success">Add</button>
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="addDevice()"
+              >
+                Add
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+  <div class="card mt-2">
+    <div class="cardstyle">
+      <div
+        class="card"
+        style="
+          width: 18rem;
+          margin-top: 10px;
+          margin-right: 2px;
+          margin-left: 2px;
+        "
+        *ngFor="let dev of devices"
+      >
+        <div
+          class="card-header text-white"
+          [ngClass]="dev.devStatus ? 'bg-success' : 'bg-danger'"
+          style="font-size: 20px; font-weight: bold"
+        >
+          {{ dev.deviceName }} - {{ dev.devType }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">IP: {{ dev.ipAddress }}</h5>
+          <p class="card-text">Operation: {{ dev.operation }}</p>
+          <p class="card-text">Sector: {{ dev.sector }}</p>
+          <div></div>
+          <div class="col d-flex cardbuttonstyle">
+            <a
+              [href]="getURL(dev.devid)"
+              class="btn btn-primary"
+              target="_blank"
+              >Open Device</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div>hello</div>

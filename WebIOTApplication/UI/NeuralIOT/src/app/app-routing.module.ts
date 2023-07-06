@@ -4,6 +4,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { LoginComponent } from './Components/login/login.component';
 import { SignupComponent } from './Components/signup/signup.component';
 import { DevicesComponent } from './Components/devices/devices.component';
+import { DevconfoperComponent } from './Components/devconfoper/devconfoper.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'devices',
     component: DevicesComponent,
+  },
+  {
+    path: 'devco',
+    component: DevconfoperComponent,
   },
 ];
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { devicestypes } from './device.constants';
+import { ApiService } from 'src/app/Services/api.service';
+import { devConfig, devices } from './Interface/device.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-devices',
@@ -8,12 +11,48 @@ import { devicestypes } from './device.constants';
 })
 export class DevicesComponent implements OnInit {
   collapsed = true;
-  deviceTypes = devicestypes;
-  ngOnInit(): void {
-    this.deviceTypes.unshift('select');
+  emptyForm = false;
+  deviceTypes: devConfig = {
+    types: [],
+  };
+  devices: devices[] = [];
+  addDeviceForm!: FormGroup;
+  constructor(
+    private apiService: ApiService,
+    private formBuilder: FormBuilder
+  ) {}
+  ngOnInit() {
+    this.addDeviceForm = this.formBuilder.group({
+      devtype: ['', Validators.required],
+      devname: ['', Validators.required],
+    });
+    this.getdeviceconfig();
+    this.getdevices();
   }
-
+  addDevice() {
+    if (this.addDeviceForm.valid) {
+      this.emptyForm = false;
+      console.log(this.addDeviceForm);
+    } else {
+      this.emptyForm = true;
+    }
+  }
+  getdeviceconfig() {
+    this.apiService.getDeviceConfig().subscribe((res) => {
+      this.deviceTypes.types = res.types;
+    });
+  }
+  getdevices() {
+    this.apiService.getDevices().subscribe((res: any) => {
+      this.devices = res.allDevices;
+      console.log(this.devices);
+    });
+  }
   toogle_collapsed(): void {
     this.collapsed = !this.collapsed;
+  }
+
+  getURL(id: string) {
+    return location.origin + '/devco' + '?id=' + id;
   }
 }

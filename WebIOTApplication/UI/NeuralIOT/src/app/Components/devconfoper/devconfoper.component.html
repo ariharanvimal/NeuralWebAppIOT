@@ -8,7 +8,168 @@
       <p class="card-text">
         With supporting text below as a natural lead-in to additional content.
       </p>
-      <button class="btn btn-primary">Configure</button>
+      <div class="d-flex col">
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-toggle="configcollapse"
+          data-target="#configcollpase"
+          aria-expanded="false"
+          aria-controls="configcollapse"
+          (click)="config_collapsed()"
+        >
+          Configure
+        </button>
+        <div
+          *ngIf="loading"
+          class="spinner-border text-primary"
+          role="status"
+        ></div>
+      </div>
+    </div>
+
+    <div
+      class="collapse"
+      style="padding: 10px"
+      id="configcollpase"
+      [ngbCollapse]="configcollapse"
+    >
+      <div>
+        <h4 class="text-center">Edit Configuration</h4>
+        <h4>Input Pins</h4>
+        <div class="card mt-2">
+          <div
+            class="pinedit"
+            *ngFor="let conf of deviceconfiguration.pins.input"
+          >
+            <div class="configstyle">
+              <div>
+                <label for="exampleInputEmail1">Pin Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_no"
+                  [disabled]="true"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Pin Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_name"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Input Type</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_type"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Default Value</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_default"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Control Type</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+              </div>
+            </div>
+            <div class="editsavebut">
+              <button type="button" class="btn btn-warning">Edit</button>
+              <!-- has to be disabled in start -->
+              <button type="button" class="btn btn-secondary">Save</button>
+              <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+        <h4>Output Pins</h4>
+        <div class="card mt-2">
+          <div
+            class="pinedit"
+            *ngFor="let conf of deviceconfiguration.pins.output"
+          >
+            <div class="configstyle">
+              <div>
+                <label for="exampleInputEmail1">Pin Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_no"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Pin Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_name"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Input Type</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_type"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Default Value</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  [value]="conf.p_default"
+                />
+              </div>
+              <div>
+                <label for="exampleInputEmail1">Control Type</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+              </div>
+            </div>
+            <div class="editsavebut">
+              <button type="button" class="btn btn-danger">Edit</button>
+              <!-- has to be disabled in start -->
+              <button type="button" class="btn btn-secondary">Save</button>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
     </div>
   </div>
   <div class="card w-100 cardstyle">
@@ -19,7 +180,23 @@
       <p class="card-text">
         With supporting text below as a natural lead-in to additional content.
       </p>
-      <button class="btn btn-success">Control</button>
+      <button
+        class="btn btn-success"
+        type="button"
+        data-toggle="operatecollapse"
+        data-target="#operatecollpase"
+        aria-expanded="false"
+        aria-controls="operatecollapse"
+        (click)="operate_collapsed()"
+      >
+        Control
+      </button>
     </div>
+    <div
+      class="collapse"
+      style="padding: 10px"
+      id="operatecollpase"
+      [ngbCollapse]="operatecollapse"
+    ></div>
   </div>
 </div>

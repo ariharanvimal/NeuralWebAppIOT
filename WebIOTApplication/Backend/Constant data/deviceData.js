@@ -61,6 +61,47 @@ const devConfig = {
     "types": ["", "ESP8266", "ESP32", "ESP8266-1"]
 }
 
+const devindconfig = [
+    {
+        id: '1',
+        pins:
+        {
+            input: [
+                {
+                    p_name: "temp",
+                    p_no: 1,
+                    p_type: "A",
+                    p_default: 85
+
+                }, {
+                    p_name: "watetemp",
+                    p_no: 2,
+                    p_type: "D",
+                    p_default: 187
+                }
+            ],
+            output: [
+                {
+                    p_name: "motor",
+                    p_no: 3,
+                    p_type: "A",
+                    p_default: 12
+
+                }, {
+                    p_name: "watetemp",
+                    p_no: 4,
+                    p_type: "D",
+                    p_default: 24
+
+                }
+            ]
+        }
+
+    },
+]
+
 module.exports = {
-    allDevices: deviceData, Config: devConfig
+    allDevices: deviceData,
+    Config: devConfig,
+    indconfig: devindconfig
 }

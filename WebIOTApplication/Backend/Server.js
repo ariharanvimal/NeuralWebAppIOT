@@ -1,5 +1,5 @@
 const express = require("express")
-const { Config, allDevices } = require("./Constant data/deviceData")
+const { Config, allDevices, indconfig } = require("./Constant data/deviceData")
 const app = express()
 const cors = require('cors')
 
@@ -22,8 +22,17 @@ app.get("/alldevices", (req, res) => {
 app.post("/devwithid", (req, res) => {
     console.log("all the best")
     const { devid } = req.body
-    let result = allDevices.filter(dev => dev.devid === devid)
-    res.json({ data: result[0] })
+    const result = allDevices.filter(dev => dev.devid === devid)
+    if (result) {
+        console.log(result[0].devid, indconfig[0].id)
+        let config = indconfig.filter(i => i.id === result[0].devid)
+        console.log(config)
+        res.json({ data: result[0], devConfig: config })
+    }
+    else {
+        res.send("No Data Found")
+    }
+
 })
 
 //Start the server

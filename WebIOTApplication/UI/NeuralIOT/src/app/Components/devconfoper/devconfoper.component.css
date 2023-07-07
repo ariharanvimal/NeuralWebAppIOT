@@ -6,3 +6,24 @@
     font-weight: bold;
     color: white;
 }
+.editsavebut{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+button{
+    margin: 10px;
+}
+.pinedit{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+.configstyle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}

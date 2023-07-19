@@ -21,3 +21,10 @@ export interface Output {
   p_type: string;
   p_default: string;
 }
+export interface editPin {
+  pin_no: string;
+  pin_name: string;
+  input_type: string;
+  default_value: string;
+  control_type: string;
+}

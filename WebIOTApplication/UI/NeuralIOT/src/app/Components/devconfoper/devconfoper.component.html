@@ -1,7 +1,7 @@
 <div class="container">
   <h5 style="margin-top: 10px">Device Control and Configuration</h5>
   <div class="card w-100 cardstyle">
-    <div class="card-header bg-primary">
+    <div class="card-header bg-primary" *ngIf="deviceDetails">
       {{ deviceDetails.deviceName }} - Configuration
     </div>
     <div class="card-body">
@@ -27,7 +27,6 @@
         ></div>
       </div>
     </div>
-
     <div
       class="collapse"
       style="padding: 10px"
@@ -36,8 +35,364 @@
     >
       <div>
         <h4 class="text-center">Edit Configuration</h4>
+        <div style="display: flex; width: 100%; justify-content: center">
+          <button class="btn btn-success" (click)="addinputPinEditor('analog')">
+            Add A New Pin
+          </button>
+        </div>
+        <div class="card mt-2" *ngIf="addPinDialogue">
+          <div
+            style="
+              display: flex;
+              width: 100%;
+              justify-content: center;
+              margin: 5px;
+            "
+          >
+            <!-- ADD a new anolog pin -->
+            <h4>Add New Pin To the Device</h4>
+          </div>
+          <div class="form-group d-flex justify-content-space-around">
+            <label for="addpino">Select the Pin Mode</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect1"
+              required
+              (change)="pinModeChange($event)"
+            >
+              <option *ngFor="let mode of pinMode">
+                {{ mode }}
+              </option>
+            </select>
+          </div>
+          <!-- add new input pin -->
+          <div *ngIf="addInputpin">
+            <h4>New Input Pin</h4>
+            <form
+              class="needs-validation configstyle"
+              [formGroup]="inputPinForm"
+              novalidate
+            >
+              <div class="form-group">
+                <label for="addpino">Pin Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addpino"
+                  aria-describedby="addpino"
+                  formControlName="add_pno"
+                />
+              </div>
+              <div class="form-group">
+                <label for="addpname">Pin Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addpname"
+                  aria-describedby="addpname"
+                  formControlName="add_pname"
+                />
+              </div>
+              <div class="form-group">
+                <label for="addpino">Pin Type</label>
+                <select
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                  formControlName="add_ptype"
+                  required
+                >
+                  <option *ngFor="let type of inputType">
+                    {{ type }}
+                  </option>
+                </select>
+              </div>
+            </form>
+            <div class="editsavebut">
+              <button type="button" class="btn btn-secondary">Save</button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="cancelAdd()"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+          <!-- add new output pin -->
+          <div *ngIf="addOutputPin">
+            <h4>New Output Pin</h4>
+            <form
+              class="needs-validation configstyle"
+              [formGroup]="outputPinForm"
+              novalidate
+            >
+              <div class="form-group">
+                <label for="addpino">Pin Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addpino"
+                  aria-describedby="addpino"
+                  formControlName="add_pno"
+                />
+              </div>
+              <div class="form-group">
+                <label for="addpname">Pin Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addpname"
+                  aria-describedby="addpname"
+                  formControlName="add_pname"
+                />
+              </div>
+              <div class="form-group">
+                <label for="addpino">Pin Type</label>
+                <select
+                  class="form-control"
+                  id="exampleFormControlSelect1"
+                  formControlName="add_ptype"
+                  (change)="newouputpintypechange($event)"
+                  required
+                >
+                  <option *ngFor="let type of inputType">
+                    {{ type }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="addpino">Pin Type</label>
+                <input
+                  [type]="analogORdigital ? 'range' : 'text'"
+                  formControlName="default"
+                />
+              </div>
+            </form>
+            <div class="editsavebut">
+              <button type="button" class="btn btn-secondary">Save</button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="cancelAdd()"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Input pins Configuration -->
         <h4>Input Pins</h4>
-        <div class="card mt-2">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">Analog Controls</h5>
+                <div class="card-text" *ngIf="deviceconfiguration">
+                  <div style="display: flex; flex-direction: row; width: 100%">
+                    <div *ngFor="let conf of deviceconfiguration.pins.input">
+                      <button
+                        class="btn btn-primary"
+                        *ngIf="conf.p_type === 'A'"
+                        (click)="openEdit(conf)"
+                      >
+                        {{ conf.p_no }} - {{ conf.p_name }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">Digital Controls</h5>
+                <div class="card-text" *ngIf="deviceconfiguration">
+                  <div *ngFor="let conf of deviceconfiguration.pins.input">
+                    <button
+                      class="btn btn-primary"
+                      *ngIf="conf.p_type === 'D'"
+                      (click)="openEdit(conf)"
+                    >
+                      {{ conf.p_no }} - {{ conf.p_name }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Input Pin Editor -->
+        <div class="card mt-2" *ngIf="editInputPinDialogue">
+          <div
+            style="display: flex; width: 100%; justify-content: space-between"
+          >
+            <h3 *ngIf="option_type === 'A'">Edit Analog Input Pin</h3>
+            <h3 *ngIf="option_type === 'D'">Edit Digital Input Pin</h3>
+            <button
+              class="btn btn-danger"
+              (click)="closeEditor('editinputdialog')"
+            >
+              X
+            </button>
+          </div>
+          <form
+            class="needs-validation configstyle"
+            [formGroup]="inputPinForm"
+            novalidate
+          >
+            <div class="form-group">
+              <label for="editpino">Pin Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpino"
+                aria-describedby="editpino"
+                formControlName="p_no"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editpname">Pin Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpname"
+                aria-describedby="editpname"
+                formControlName="p_name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="edittype">Type</label>
+              <input
+                type="text"
+                class="form-control"
+                id="edittype"
+                aria-describedby="edittype"
+                formControlName="p_type"
+                readonly
+              />
+            </div>
+            <!-- <div class="form-group" *ngIf="option_type !== 'A'">
+              <label for="editpdval">Default Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpdval"
+                aria-describedby="editpdval"
+                formControlName="p_default"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editpmin">Min Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpmin"
+                aria-describedby="editpmin"
+                formControlName="edit_pmin"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editpmax">Max Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpmax"
+                aria-describedby="editpmax"
+                formControlName="edit_pmax"
+              />
+            </div> -->
+          </form>
+          <div class="editsavebut">
+            <button type="button" class="btn btn-warning">Edit</button>
+            <!-- has to be disabled in start -->
+            <button type="button" class="btn btn-secondary">Save</button>
+            <button type="button" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+        <!-- Pin Adding -->
+        <div class="card mt-2" *ngIf="addPinDialogue">
+          <div
+            style="
+              display: flex;
+              width: 100%;
+              justify-content: space-between;
+              margin: 5px;
+            "
+          >
+            <!-- ADD a new anolog pin -->
+            <h2>Add New Analog Input Pin</h2>
+            <button
+              class="btn btn-danger"
+              (click)="closeEditor('addinputanalog')"
+            >
+              X
+            </button>
+          </div>
+          <!-- <form
+            class="needs-validation configstyle"
+            [formGroup]="inputPinForm"
+            novalidate
+          >
+            <div class="form-group">
+              <label for="addpino">Pin Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpino"
+                aria-describedby="addpino"
+                formControlName="add_pno"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpname">Pin Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpname"
+                aria-describedby="addpname"
+                formControlName="add_pname"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpdval">Default Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpdval"
+                aria-describedby="addpdval"
+                formControlName="add_pdefault"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpmin">Min Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpmin"
+                aria-describedby="addpmin"
+                formControlName="add_pmin"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpmax">Max Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpmax"
+                aria-describedby="addpmax"
+                formControlName="add_pmax"
+              />
+            </div>
+          </form> -->
+          <div class="editsavebut">
+            <button type="button" class="btn btn-secondary">Save</button>
+            <button type="button" class="btn btn-danger" (click)="cancelAdd()">
+              Cancel
+            </button>
+          </div>
+        </div>
+        <!-- <div class="card mt-2" *ngIf="deviceconfiguration">
           <div
             class="pinedit"
             *ngFor="let conf of deviceconfiguration.pins.input"
@@ -50,8 +405,7 @@
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
-                  [value]="conf.p_no"
-                  [disabled]="true"
+                  [(ngModel)]="conf.p_no"
                 />
               </div>
               <div>
@@ -61,7 +415,7 @@
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
-                  [value]="conf.p_name"
+                  [(ngModel)]="conf.p_name"
                 />
               </div>
               <div>
@@ -71,7 +425,7 @@
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
-                  [value]="conf.p_type"
+                  [(ngModel)]="conf.p_type"
                 />
               </div>
               <div>
@@ -81,7 +435,7 @@
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
-                  [value]="conf.p_default"
+                  [(ngModel)]="conf.p_default"
                 />
               </div>
               <div>
@@ -97,14 +451,232 @@
             </div>
             <div class="editsavebut">
               <button type="button" class="btn btn-warning">Edit</button>
-              <!-- has to be disabled in start -->
-              <button type="button" class="btn btn-secondary">Save</button>
+              has to be disabled in start
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="saveconfig(conf)"
+              >
+                Save
+              </button>
               <button type="button" class="btn btn-danger">Delete</button>
             </div>
           </div>
-        </div>
+        </div> -->
+        <!-- Output pins Configuration -->
         <h4>Output Pins</h4>
-        <div class="card mt-2">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">Analog Controls</h5>
+                <div class="card-text" *ngIf="deviceconfiguration">
+                  <div style="display: flex; flex-direction: row; width: 100%">
+                    <div *ngFor="let conf of deviceconfiguration.pins.output">
+                      <button
+                        class="btn btn-primary"
+                        *ngIf="conf.p_type === 'A'"
+                        (click)="openEdit(conf)"
+                      >
+                        {{ conf.p_no }} - {{ conf.p_name }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="display: flex; width: 100%; justify-content: flex-end"
+                >
+                  <button
+                    class="btn btn-success"
+                    (click)="addPinEditor('output')"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title text-center">Digital Controls</h5>
+                <div class="card-text" *ngIf="deviceconfiguration">
+                  <div *ngFor="let conf of deviceconfiguration.pins.output">
+                    <button
+                      class="btn btn-primary"
+                      *ngIf="conf.p_type === 'D'"
+                      (click)="openEdit(conf)"
+                    >
+                      {{ conf.p_no }} - {{ conf.p_name }}
+                    </button>
+                  </div>
+                </div>
+                <div
+                  style="display: flex; width: 100%; justify-content: flex-end"
+                >
+                  <button
+                    class="btn btn-success"
+                    (click)="addPinEditor('output')"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Pin Editor -->
+        <div class="card mt-2" *ngIf="pinEditSelected">
+          <div
+            style="display: flex; width: 100%; justify-content: space-between"
+          >
+            <h3>Edit Analog Output Pin</h3>
+            <button class="btn btn-danger" (click)="closeEditor('edit')">
+              X
+            </button>
+          </div>
+          <form
+            class="needs-validation configstyle"
+            [formGroup]="editPinForm"
+            novalidate
+          >
+            <div class="form-group">
+              <label for="editpino">Pin Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpino"
+                aria-describedby="editpino"
+                formControlName="p_no"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editpname">Pin Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpname"
+                aria-describedby="editpname"
+                formControlName="p_name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editpdval">Default Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpdval"
+                aria-describedby="editpdval"
+                formControlName="p_default"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editpmin">Min Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpmin"
+                aria-describedby="editpmin"
+                formControlName="edit_pmin"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editpmax">Max Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editpmax"
+                aria-describedby="editpmax"
+                formControlName="edit_pmax"
+              />
+            </div>
+          </form>
+          <div class="editsavebut">
+            <button type="button" class="btn btn-warning">Edit</button>
+            <!-- has to be disabled in start -->
+            <button type="button" class="btn btn-secondary">Save</button>
+            <button type="button" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+        <!-- Pin Adding -->
+        <div class="card mt-2" *ngIf="pinAddSelected">
+          <div
+            style="
+              display: flex;
+              width: 100%;
+              justify-content: space-between;
+              margin: 5px;
+            "
+          >
+            <h2>Add New Analog Output Pin</h2>
+            <button class="btn btn-danger" (click)="closeEditor('add')">
+              X
+            </button>
+          </div>
+          <form
+            class="needs-validation configstyle"
+            [formGroup]="addPinForm"
+            novalidate
+          >
+            <div class="form-group">
+              <label for="addpino">Pin Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpino"
+                aria-describedby="addpino"
+                formControlName="add_pno"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpname">Pin Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpname"
+                aria-describedby="addpname"
+                formControlName="addpname"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpdval">Default Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpdval"
+                aria-describedby="addpdval"
+                formControlName="add_pdefault"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpmin">Min Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpmin"
+                aria-describedby="addpmin"
+                formControlName="add_pmin"
+              />
+            </div>
+            <div class="form-group">
+              <label for="addpmax">Max Value</label>
+              <input
+                type="text"
+                class="form-control"
+                id="addpmax"
+                aria-describedby="addpmax"
+                formControlName="add_pmax"
+              />
+            </div>
+          </form>
+          <div class="editsavebut">
+            <button type="button" class="btn btn-secondary">Save</button>
+            <button type="button" class="btn btn-danger" (click)="cancelAdd()">
+              Cancel
+            </button>
+          </div>
+        </div>
+        <!-- <div class="card mt-2" *ngIf="deviceconfiguration">
           <div
             class="pinedit"
             *ngFor="let conf of deviceconfiguration.pins.output"
@@ -131,7 +703,7 @@
                 />
               </div>
               <div>
-                <label for="exampleInputEmail1">Input Type</label>
+                <label for="exampleInputEmail1">Output Type</label>
                 <input
                   type="text"
                   class="form-control"
@@ -163,16 +735,17 @@
             </div>
             <div class="editsavebut">
               <button type="button" class="btn btn-danger">Edit</button>
-              <!-- has to be disabled in start -->
+               has to be disabled in start
               <button type="button" class="btn btn-secondary">Save</button>
+              <button type="button" class="btn btn-danger">Delete</button>
             </div>
           </div>
-        </div>
-        <div></div>
+        </div> -->
       </div>
     </div>
   </div>
-  <div class="card w-100 cardstyle">
+  <!-- Operation -->
+  <div class="card w-100 cardstyle" *ngIf="deviceDetails">
     <div class="card-header bg-success">
       {{ deviceDetails.deviceName }} - Operation
     </div>

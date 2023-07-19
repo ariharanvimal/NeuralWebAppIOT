@@ -85,12 +85,18 @@ const devindconfig = [
                     p_name: "motor",
                     p_no: 3,
                     p_type: "A",
-                    p_default: 12
+                    p_default: 12,
 
                 }, {
                     p_name: "watetemp",
                     p_no: 4,
                     p_type: "D",
+                    p_default: 24
+
+                }, {
+                    p_name: "Aerator Motor",
+                    p_no: 5,
+                    p_type: "A",
                     p_default: 24
 
                 }

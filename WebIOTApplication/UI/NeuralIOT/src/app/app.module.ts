@@ -13,7 +13,7 @@ import { SignupComponent } from './Components/signup/signup.component';
 import { HomeComponent } from './Components/home/home.component';
 import { DevicesComponent } from './Components/devices/devices.component';
 import { NavBarNEORComponent } from './Components/nav-bar-neor/nav-bar-neor.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { DevconfoperComponent } from './Components/devconfoper/devconfoper.component';
 
 @NgModule({

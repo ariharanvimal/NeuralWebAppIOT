@@ -11,10 +11,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/login/login.component';
 import { SignupComponent } from './Components/signup/signup.component';
 import { HomeComponent } from './Components/home/home.component';
-import { DevicesComponent } from './Components/devices/devices.component';
 import { NavBarNEORComponent } from './Components/nav-bar-neor/nav-bar-neor.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { DevconfoperComponent } from './Components/devconfoper/devconfoper.component';
+import { DevicesComponent } from './Components/devices/devices.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +22,9 @@ import { DevconfoperComponent } from './Components/devconfoper/devconfoper.compo
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    DevicesComponent,
     NavBarNEORComponent,
     DevconfoperComponent,
+    DevicesComponent,
   ],
   imports: [
     BrowserModule,

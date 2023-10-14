@@ -86,7 +86,38 @@
               <div class="invalid-feedback">
                 {{
                   addDeviceForm.controls["devname"].hasError("required")
-                    ? "Email ID is Required"
+                    ? "Dev Name is Required"
+                    : ""
+                }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="devMAC">Device MAC</label>
+              <input
+                type="text"
+                class="form-control"
+                id="devMAC"
+                placeholder="Enter the Device MAC"
+                formControlName="devmac"
+                autocomplete="off"
+                required
+                [ngClass]="
+                  (addDeviceForm.controls['devmac'].touched ||
+                    addDeviceForm.controls['devmac'].dirty) &&
+                  addDeviceForm.controls['devmac'].invalid
+                    ? 'is-invalid'
+                    : '' ||
+                      ((addDeviceForm.controls['devmac'].touched ||
+                        addDeviceForm.controls['devmac'].dirty) &&
+                        !addDeviceForm.controls['devmac'].invalid)
+                    ? 'is-valid'
+                    : ''
+                "
+              />
+              <div class="invalid-feedback">
+                {{
+                  addDeviceForm.controls["devmac"].hasError("required")
+                    ? "MAC ID is Required"
                     : ""
                 }}
               </div>

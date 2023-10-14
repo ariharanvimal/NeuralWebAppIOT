@@ -5,6 +5,7 @@ import {
   devConfig,
   devices,
 } from '../Components/devices/Interface/device.interface';
+import { newDevice } from '../Components/devconfoper/Interface/NewDeviceInterface.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,4 +30,5 @@ export class ApiService {
       devid: id,
     });
   }
+  addNewDevice(data: newDevice) {}
 }

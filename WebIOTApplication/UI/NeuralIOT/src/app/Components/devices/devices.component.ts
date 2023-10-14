@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/Services/api.service';
 import { devConfig, devices } from './Interface/device.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map } from 'rxjs';
+import { newDevice } from '../devconfoper/Interface/NewDeviceInterface.interface';
 
 @Component({
   selector: 'app-devices',
@@ -17,6 +17,12 @@ export class DevicesComponent implements OnInit {
   };
   devices: devices[] = [];
   addDeviceForm!: FormGroup;
+  newDevice: newDevice = {
+    devName: '',
+    devType: '',
+    devMac: '',
+  };
+
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder
@@ -25,14 +31,19 @@ export class DevicesComponent implements OnInit {
     this.addDeviceForm = this.formBuilder.group({
       devtype: ['', Validators.required],
       devname: ['', Validators.required],
+      devmac: ['', Validators.required],
     });
     this.getdeviceconfig();
     this.getdevices();
   }
   addDevice() {
     if (this.addDeviceForm.valid) {
+      console.log(this.addDeviceForm.controls['devname'].value);
+      this.newDevice.devName = this.addDeviceForm.controls['devname'].value;
+      this.newDevice.devType = this.addDeviceForm.controls['devtype'].value;
+      this.newDevice.devMac = this.addDeviceForm.controls['devmac'].value;
       this.emptyForm = false;
-      console.log(this.addDeviceForm);
+      console.log(this.newDevice);
     } else {
       this.emptyForm = true;
     }

@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const { Config, allDevices, indconfig } = require("../../Constant data/deviceData");
-const { Devicetable } = require("../DataBase Operation/Models/models");
 const dboperations = require("../DataBase Operation/DB_operation")
 
 //add a new Device
@@ -14,20 +13,43 @@ router.post("/addnewdevice", async (req, res) => {
     }
     else {
         await dboperations.addDevicetoDB(MAC).then((data) => {
-            console.log(data)
             res.send(data);
         })
     }
 
 
 })
-
 //config device
-router.post("/configdevices", (req, res) => {
-    const { MAC, deviceID, config } = req.body;
-    res.json({
-        MAC, deviceID, config
-    })
+router.post("/configdevices", async (req, res) => {
+    const { MAC, ID } = req.body;
+    if (await dboperations.checkForExistingDevice(MAC)) {
+        await dboperations.configDevice(MAC, ID).then((data) => {
+            res.json(data)
+        })
+    }
+    else {
+        res.json({
+            status: "failed",
+            msg: "Device does not Exist"
+        })
+    }
+
+})
+//config device pins
+router.post("/pinconfig", async (req, res) => {
+    const { MAC, ID } = req.body;
+    if (await dboperations.checkForExistingDevice(MAC)) {
+        await dboperations.pinconfig(ID).then((data) => {
+            res.json(data)
+        })
+    }
+    else {
+        res.json({
+            status: "failed",
+            msg: "Device does not Exist"
+        })
+    }
+
 })
 //listen for the confdevice page
 router.post("/deviceConfigs", (req, res) => {

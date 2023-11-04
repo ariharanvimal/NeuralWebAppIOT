@@ -6,6 +6,12 @@ const dataBase = {
     NeuralOrganics: "NeuralOrganicsiot",
 }
 
+const sqldatabase = {
+    path: '/WebIOTApplication/Backend/Application/DataBase Operation/SQLDATABASE/',
+    dbName: 'NeuralOrganicsIOT.db',
+    tableName: 'NerualOrganicsIotData'
+}
+
 module.exports = {
-    application, dataBase
+    application, dataBase, sqldatabase
 }

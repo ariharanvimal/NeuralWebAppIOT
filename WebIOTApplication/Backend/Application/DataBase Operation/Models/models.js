@@ -12,6 +12,14 @@ const Devices = new mongoose.Schema({
     deviceID: {
         type: String,
         default: ""
+    },
+    configState: {
+        type: Boolean,
+        default: false
+    },
+    pinConfig: {
+        type: Boolean,
+        default: false
     }
 })
 const Devicetable = mongoose.model("Device_table", Devices);

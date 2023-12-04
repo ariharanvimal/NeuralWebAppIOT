@@ -1,5 +1,6 @@
 const mqtt = require('mqtt')
 const dbsqloperation = require("../DataBase Operation/DB_SQL_operation")
+const { spawn } = require('child_process')
 
 class MqttHandler {
     constructor() {
@@ -31,6 +32,11 @@ class MqttHandler {
 
             if (topic === "env") {
                 const data = JSON.parse(message.toString())
+                const pythonProcess = spawn('C:/Users/Ariharan/AppData/Local/Programs/Python/Python310/python.exe', ['./SQL_Operation.py', data]);
+
+                pythonProcess.stdout.on('data', (data) => {
+                    console.log(`Python Script Output: ${data}`);
+                });
                 dbsqloperation.insertSensorRecord(data.temp, data.hum)
             }
             var pathwithdevid = topic.split('/')

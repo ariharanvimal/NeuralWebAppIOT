@@ -11,21 +11,22 @@ const mqtthandler = new MqttHandler()
 
 
 // mongo Db
-dboperations.connectToDatabase();
+// dboperations.connectToDatabase();
 //sql Db
 sqldboperation.sqldb();
+// sqldboperation.selectAllTable()
 // sqldboperation.insertRecord();
 // sqldboperation.selectAllDataFromTable();
 // sqldboperation.selectAllDatatoJSON();
 
 //firebase Db
-firebaseoperation.initializeFirebase();
+// firebaseoperation.initializeFirebase();
 
 //jobs
-scheduledJob();
+// scheduledJob();
 
 //mqtt Handler
-mqtthandler.connect();
+// mqtthandler.connect();
 //middleware
 app.use(express.json())
 app.use(cors())

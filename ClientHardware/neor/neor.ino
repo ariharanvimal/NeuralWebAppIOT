@@ -4,7 +4,7 @@
 // Replace these with your network and MQTT broker details
 const char* ssid = "Ariharanext";
 const char* password = "ariharan6497";
-const char* mqttServer = "192.168.29.188";
+const char* mqttServer = "raspberrypi.local";
 const int mqttPort = 1883;
 const char* mqttTopic = "env";
 
@@ -49,7 +49,7 @@ void loop() {
   }
   
   client.loop();
-  delay(5000);  // Publish data every 5 seconds
+  delay(10000);  // Publish data every 5 seconds
 }
 
 //water temperature

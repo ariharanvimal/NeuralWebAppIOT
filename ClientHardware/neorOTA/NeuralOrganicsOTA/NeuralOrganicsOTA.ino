@@ -20,7 +20,7 @@ const char *ssid = STASSID;
 const char *password = STAPSK;
 String devName = "NEOR_TD_2_8266";
 String serverName = "http://192.168.29.188:5000";
-String mqttServer = "192.168.29.188";
+String mqttServer = "raspberrypi.local";
 const int mqttPort = 1883;
 String mqttTopic = "env";
 
@@ -48,7 +48,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
 
 // function to reconnect id got disconnected
 void reconnect() {
-  if(!client.connected()) {
+  if (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
 
     if (client.connect("NodeMCU_Client")) {
@@ -237,6 +237,16 @@ void subscribeTopic(String topic) {
 
 // sample testing data to server
 void sendDataToMQTT() {
-  String jsonMessage = "{\"temp\":" + String(25) + ", \"hum\":" + String(55) + "}";
+  String jsonMessage = "{\"temp\":" + String(getTemp()) + ", \"hum\":" + String(getHum()) + "}";
   publishJsonData(jsonMessage, "env");
+}
+//water temperature
+float getTemp() {
+  float temp = random(32, 50);
+  return temp;
+}
+//env humidity
+float getHum() {
+  float hum = random(25, 80);
+  return hum;
 }

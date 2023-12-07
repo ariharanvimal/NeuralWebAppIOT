@@ -10,12 +10,26 @@ import { SignupComponent } from './Components/signup/signup.component';
 import { MqttDashboardComponent } from './Components/mqtt-dashboard/mqtt-dashboard.component';
 import { TopNavBarComponent } from './Components/top-nav-bar/top-nav-bar.component';
 import { HomeComponent } from './Components/home/home.component';
+import { NgbModule, NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, MqttDashboardComponent, TopNavBarComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignupComponent,
+    MqttDashboardComponent,
+    TopNavBarComponent,
+    HomeComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbCollapse,
+    HttpClientModule,
     MqttModule.forRoot(mqttServiceOptions),
   ],
   providers: [],

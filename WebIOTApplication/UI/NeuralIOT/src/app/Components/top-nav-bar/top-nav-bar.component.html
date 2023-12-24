@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
       <img
-        src="../../../assets/Neural Organics-PNG.png"
+        src="../../../assets/images/Neural Organics-PNG.png"
         width="55"
         height="50"
         alt=""
@@ -20,27 +20,15 @@
     >
       <span class="navbar-toggler-icon" ngToggler></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarNav"
+      [ngbCollapse]="collapsed"
+    >
       <div class="me-auto mb-2">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="/product">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/contact">Contact US</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About US</a>
-          </li>
-        </ul>
-      </div>
-      <div class="me-2">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/cart">Cart</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/myorders">My Orders</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
         </ul>
       </div>
@@ -57,4 +45,3 @@
     </div>
   </div>
 </nav>
-<router-outlet></router-outlet>

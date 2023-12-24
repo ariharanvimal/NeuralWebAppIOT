@@ -104,7 +104,7 @@ void loop() {
   client.loop();
 
   sendDataToMQTT();
-  delay(5000);
+  delay(2000);
 }
 // Set up Over The Air programming config
 void neorOTA() {

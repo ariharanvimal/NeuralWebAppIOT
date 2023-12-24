@@ -1,0 +1,12 @@
+@if (message){
+<ngx-gauge
+  type="full"
+  [value]="message.temp"
+  [thresholds]="thresholdConfig"
+></ngx-gauge>
+<ngx-gauge
+  type="arch"
+  [value]="message.hum"
+  [thresholds]="thresholdConfig"
+></ngx-gauge>
+}
